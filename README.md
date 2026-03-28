@@ -156,7 +156,7 @@ java cliente.Cliente
 Proyecto desarrollado por:
 
 * Allan Fauricio Fonseca Batista
-* [Agregar compañeros]
+* 
 
 ---
 
