@@ -1,176 +1,141 @@
-# 🧠 UfideQuiz — Sistema Cliente/Servidor en Java
+# Multiplayer Trivia Game (Client-Server Java)
 
-## 📌 Descripción
+Real-time multiplayer trivia game built with a client-server architecture using Java sockets.
 
-**UfideQuiz** es un sistema distribuido basado en arquitectura cliente-servidor desarrollado en Java, que implementa un juego interactivo de preguntas y respuestas en tiempo real utilizando sockets TCP/IP.
-
-El sistema permite la conexión de múltiples clientes a un servidor central, encargado de gestionar la lógica del juego, validar respuestas, asignar puntajes y coordinar la interacción entre los participantes.
-
-Este proyecto fue desarrollado como parte del curso SC302, con enfoque en redes, concurrencia y diseño estructurado de sistemas distribuidos.
+This project simulates a distributed system where a central server manages game logic, player states, and scoring, while multiple clients connect and compete simultaneously.
 
 ---
 
-## 🎯 Objetivos del Proyecto
+## Overview
 
-* Implementar comunicación cliente-servidor mediante sockets en Java
-* Diseñar un sistema concurrente capaz de manejar múltiples clientes
-* Aplicar principios de programación orientada a objetos
-* Gestionar lógica de negocio (validación, puntuación, flujo del juego)
-* Simular un entorno distribuido básico en tiempo real
+This system was designed to solve the lack of simple, customizable multiplayer trivia platforms.
 
----
-
-## ⚙️ Tecnologías Utilizadas
-
-* **Java SE**
-* **Sockets TCP/IP**
-* **Programación Orientada a Objetos (POO)**
-* **Multithreading (Threads)**
-* **I/O Streams**
+Key characteristics:
+- Real-time multiplayer interaction
+- Custom question handling
+- Centralized game logic
+- Private game sessions
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## Architecture
 
-El sistema sigue una arquitectura cliente-servidor clásica:
+The application follows a **client-server model**:
 
-### 🔹 Servidor
+### Server
+- Manages game flow
+- Sends questions to clients
+- Processes answers
+- Updates scores in real time
 
-* Escucha conexiones entrantes
-* Maneja múltiples clientes simultáneamente mediante hilos
-* Envía preguntas
-* Valida respuestas
-* Calcula y actualiza puntajes
-* Controla el flujo del juego
+### Client
+- Connects to server via sockets
+- Displays questions and options
+- Sends responses
+- Shows live scoreboard
 
-### 🔹 Cliente
-
-* Se conecta al servidor
-* Recibe preguntas
-* Envía respuestas
-* Muestra resultados al usuario
+Communication is handled through a **custom message protocol over sockets**.
 
 ---
 
-## 🔄 Flujo de Ejecución
+## Features
 
-1. El servidor inicia y queda en estado de escucha
-2. Uno o más clientes se conectan al servidor
-3. El servidor envía preguntas a los clientes
-4. Cada cliente responde en tiempo real
-5. El servidor valida las respuestas
-6. Se asignan puntos según la respuesta
-7. Se actualiza el estado del juego
-8. Se continúa el ciclo hasta finalizar
-
----
-
-## 📂 Estructura del Proyecto
-
-```
-UfideQuiz-ClienteServidor/
-│
-├── servidor/
-│   ├── Servidor.java
-│   ├── GestorClientes.java
-│   └── LogicaJuego.java
-│
-├── cliente/
-│   ├── Cliente.java
-│   └── InterfazCliente.java
-│
-├── modelo/
-│   ├── Jugador.java
-│   ├── Pregunta.java
-│   └── Respuesta.java
-│
-└── README.md
-```
-
-> ⚠️ Nota: La estructura puede variar según la implementación final.
+- Multiplayer game room management
+- Player tracking and states
+- Turn-based question system
+- Real-time scoring updates
+- Winner detection and game termination
+- Desktop UI using Java Swing
+- Exception handling for system stability
+- Secure data handling (basic encryption support)
+- Persistent data storage (database integration)
 
 ---
 
-## ▶️ Ejecución del Proyecto
+## Technologies
 
-### 🔹 1. Compilar
+- Java
+- Java Sockets (TCP/IP)
+- Swing (GUI)
+- MVC Architecture
+- Object-Oriented Programming (OOP)
+- Database integration
 
+---
+
+## How It Works
+
+1. The server initializes the game session  
+2. Clients connect to the server  
+3. The server sends a question to all players  
+4. Clients respond through socket communication  
+5. The server processes answers and updates scores  
+6. After all rounds, a winner is declared  
+
+---
+
+## Project Structure
+/server
+/client
+/model
+/view
+/controller
+/database
+
+---
+
+## Key Concepts Demonstrated
+
+- Client-server communication  
+- Concurrent user handling  
+- Real-time data synchronization  
+- Protocol design over sockets  
+- Separation of concerns (MVC)  
+- Robust exception handling  
+
+---
+
+## Installation & Execution
+
+### Requirements
+- Java JDK 8+
+
+### Run Server
 ```bash
-javac servidor/*.java cliente/*.java modelo/*.java
-```
+java Server.java
 
-### 🔹 2. Ejecutar servidor
+---
 
+## Key Concepts Demonstrated
+
+- Client-server communication  
+- Concurrent user handling  
+- Real-time data synchronization  
+- Protocol design over sockets  
+- Separation of concerns (MVC)  
+- Robust exception handling  
+
+---
+
+## Installation & Execution
+
+### Requirements
+- Java JDK 8+
+
+### Run Server
 ```bash
-java servidor.Servidor
-```
+java Server.java
+java Client.java
+Future Improvements
+Web-based client (React / API backend)
+Authentication system
+Improved encryption
+Scalable architecture (microservices)
+Matchmaking system
+Team
 
-### 🔹 3. Ejecutar cliente
+Allan Fauricio Fonseca Batista
+Final Note
 
-```bash
-java cliente.Cliente
-```
+This project represents a practical implementation of distributed systems concepts, focusing on real-time interaction, concurrency, and structured backend logic.
 
----
-
-## 📊 Funcionalidades Principales
-
-* Conexión cliente-servidor mediante sockets
-* Manejo concurrente de múltiples jugadores
-* Sistema de preguntas y respuestas
-* Validación de respuestas en servidor
-* Sistema de puntuación dinámico
-* Comunicación bidireccional en tiempo real
-
----
-
-## 🧪 Consideraciones Técnicas
-
-* Uso de hilos para manejar múltiples conexiones simultáneas
-* Separación de responsabilidades (cliente, servidor, modelo)
-* Manejo de entrada/salida mediante streams
-* Sincronización básica en la lógica del juego
-
----
-
-## 🚀 Mejoras Futuras
-
-* Implementación de interfaz gráfica (JavaFX o Swing)
-* Persistencia de datos con base de datos (MySQL / PostgreSQL)
-* Sistema de autenticación de usuarios
-* Ranking global de jugadores
-* Manejo avanzado de sesiones
-* Migración a arquitectura REST o WebSockets
-* Despliegue en entorno cloud
-
----
-
-## 📸 Evidencia (Opcional)
-
-*Agregar capturas de pantalla del sistema en ejecución*
-
----
-
-## 👥 Autores
-
-Proyecto desarrollado por:
-
-* Allan Fauricio Fonseca Batista
-* 
-
----
-
-## 📄 Licencia
-
-Uso académico — Universidad Fidélitas
-Curso SC302
-
----
-
-## 🧠 Reflexión Técnica
-
-Este proyecto permite comprender los fundamentos de los sistemas distribuidos, la comunicación en red mediante sockets y la importancia de diseñar correctamente la concurrencia y el flujo de información en aplicaciones multiusuario.
-
-Más allá de su implementación académica, sienta bases sólidas para el desarrollo de sistemas backend escalables y aplicaciones en tiempo real.
-
----
