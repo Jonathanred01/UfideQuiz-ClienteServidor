@@ -14,13 +14,13 @@ public class Respuesta {
     private Jugador jugador;
     private Pregunta pregunta;
     private Opcion opcionSeleccionada;
-    private boolean esCorrecta;
+    private boolean correcta;
 
     public Respuesta(Jugador jugador, Pregunta pregunta, Opcion opcionSeleccionada) {
         this.jugador = jugador;
         this.pregunta = pregunta;
         this.opcionSeleccionada = opcionSeleccionada;
-        this.esCorrecta = opcionSeleccionada.isEsCorrecta();
+        this.correcta = opcionSeleccionada != null && opcionSeleccionada.isCorrecta();
     }
 
     public Jugador getJugador() {
@@ -35,7 +35,7 @@ public class Respuesta {
         return opcionSeleccionada;
     }
 
-    public boolean isEsCorrecta() {
-        return esCorrecta;
+    public boolean isCorrecta() {
+        return correcta;
     }
 }

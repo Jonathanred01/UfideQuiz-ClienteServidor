@@ -14,11 +14,15 @@ public class Jugador {
     private int id;
     private String nombre;
     private int puntaje;
+    private boolean listo;
+    private boolean respondioPreguntaActual;
 
     public Jugador(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
         this.puntaje = 0;
+        this.listo = false;
+        this.respondioPreguntaActual = false;
     }
 
     public int getId() {
@@ -33,19 +37,26 @@ public class Jugador {
         return puntaje;
     }
 
+    public boolean isListo() {
+        return listo;
+    }
+
+    public boolean isRespondioPreguntaActual() {
+        return respondioPreguntaActual;
+    }
+
+    public void setListo(boolean listo) {
+        this.listo = listo;
+    }
+
+    public void setRespondioPreguntaActual(boolean respondioPreguntaActual) {
+        this.respondioPreguntaActual = respondioPreguntaActual;
+    }
+
     public void agregarPuntos(int puntos) {
-        if (puntos < 0) {
-            return; // ignora valores negativos
+        if (puntos > 0) {
+            this.puntaje += puntos;
         }
-        this.puntaje += puntos;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 }
 

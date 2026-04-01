@@ -13,12 +13,12 @@ public class Opcion {
 
     private int id;
     private String texto;
-    private boolean esCorrecta;
+    private boolean correcta;
 
-    public Opcion(int id, String texto, boolean esCorrecta) {
+    public Opcion(int id, String texto, boolean correcta) {
         this.id = id;
         this.texto = texto;
-        this.esCorrecta = esCorrecta;
+        this.correcta = correcta;
     }
 
     public int getId() {
@@ -29,8 +29,8 @@ public class Opcion {
         return texto;
     }
 
-    public boolean isEsCorrecta() {
-        return esCorrecta;
+    public boolean isCorrecta() {
+        return correcta;
     }
 }
 

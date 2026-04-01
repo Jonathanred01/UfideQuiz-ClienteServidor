@@ -13,35 +13,43 @@ import java.util.List;
 public class Pregunta {
 
     private int id;
-    private String texto;
+    private String enunciado;
     private List<Opcion> opciones;
-    private boolean respondida;
 
-    public Pregunta(int id, String texto, List<Opcion> opciones) {
+    public Pregunta(int id, String enunciado, List<Opcion> opciones) {
         this.id = id;
-        this.texto = texto;
+        this.enunciado = enunciado;
         this.opciones = opciones;
-        this.respondida = false;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getEnunciado() {
+        return enunciado;
     }
 
     public List<Opcion> getOpciones() {
         return opciones;
     }
 
-    public boolean isRespondida() {
-        return respondida;
+    public Opcion buscarOpcionPorId(int idOpcion) {
+        for (Opcion opcion : opciones) {
+            if (opcion.getId() == idOpcion) {
+                return opcion;
+            }
+        }
+        return null;
     }
 
-    public void marcarComoRespondida() {
-        this.respondida = true;
+    public Opcion getOpcionCorrecta() {
+        for (Opcion opcion : opciones) {
+            if (opcion.isCorrecta()) {
+                return opcion;
+            }
+        }
+        return null;
     }
 }
 

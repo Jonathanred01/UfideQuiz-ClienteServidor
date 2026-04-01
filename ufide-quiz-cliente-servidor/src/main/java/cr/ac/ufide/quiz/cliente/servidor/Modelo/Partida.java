@@ -14,40 +14,67 @@ import java.util.List;
 
 public class Partida {
 
-    private List<Jugador> jugadores;
     private List<Pregunta> preguntas;
-    private int turnoActual;
-    private boolean enCurso;
+    private int indicePreguntaActual;
+    private boolean iniciada;
+    private boolean finalizada;
+    private List<Respuesta> respuestas;
 
-    public Partida(List<Jugador> jugadores, List<Pregunta> preguntas) {
-        this.jugadores = new ArrayList<>(jugadores); // copia de la lista
-        this.preguntas = preguntas;
-        this.turnoActual = 0;
-        this.enCurso = true;
-    }
-
-    public Jugador getJugadorActual() {
-        return jugadores.get(turnoActual);
-    }
-
-    public void avanzarTurno() {
-        turnoActual = (turnoActual + 1) % jugadores.size();
-    }
-
-    public boolean estaEnCurso() {
-        return enCurso;
-    }
-
-    public void finalizarPartida() {
-        enCurso = false;
-    }
-
-    public List<Jugador> getJugadores() {
-        return jugadores;
+    public Partida(List<Pregunta> preguntas) {
+        this.preguntas = new ArrayList<>(preguntas);
+        this.indicePreguntaActual = 0;
+        this.iniciada = false;
+        this.finalizada = false;
+        this.respuestas = new ArrayList<>();
     }
 
     public List<Pregunta> getPreguntas() {
         return preguntas;
+    }
+
+    public int getIndicePreguntaActual() {
+        return indicePreguntaActual;
+    }
+
+    public boolean isIniciada() {
+        return iniciada;
+    }
+
+    public boolean isFinalizada() {
+        return finalizada;
+    }
+
+    public void iniciar() {
+        this.iniciada = true;
+        this.finalizada = false;
+    }
+
+    public void finalizar() {
+        this.finalizada = true;
+    }
+
+    public Pregunta getPreguntaActual() {
+        if (indicePreguntaActual >= 0 && indicePreguntaActual < preguntas.size()) {
+            return preguntas.get(indicePreguntaActual);
+        }
+        return null;
+    }
+
+    public void agregarRespuesta(Respuesta respuesta) {
+        respuestas.add(respuesta);
+    }
+
+    public List<Respuesta> getRespuestas() {
+        return respuestas;
+    }
+
+    public void limpiarRespuestasRonda() {
+        respuestas.clear();
+    }
+
+    public boolean avanzarPregunta() {
+        indicePreguntaActual++;
+        return indicePreguntaActual < preguntas.size();
     }
 }
 
