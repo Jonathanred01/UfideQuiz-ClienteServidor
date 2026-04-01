@@ -3,13 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package cr.ac.ufide.quiz.cliente.servidor.Vista;
-
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.ClienteJuego;
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.EscuchadorCliente;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 /**
  *
  * @author jimel
  */
-public class FrmConexion extends javax.swing.JFrame {
-    
+public class FrmConexion extends JFrame implements EscuchadorCliente {
+
+
+    private ClienteJuego cliente;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmConexion.class.getName());
 
     /**
@@ -17,6 +30,106 @@ public class FrmConexion extends javax.swing.JFrame {
      */
     public FrmConexion() {
         initComponents();
+        setLocationRelativeTo(null);
+        configurarEventos();
+        lblEstadoConexion.setText("Estado: sin conectar");
+        txtIp.setText("127.0.0.1");
+        txtPuerto.setText("6500");
+    }
+
+    private void configurarEventos() {
+        btnConectar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                conectar();
+            }
+        });
+
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                System.exit(0);
+            }
+        });
+    }
+
+    private void conectar() {
+        String nickname = txtNickname.getText().trim();
+        String ip = txtIp.getText().trim();
+        String puertoTexto = txtPuerto.getText().trim();
+
+        if (nickname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un nickname");
+            return;
+        }
+
+        try {
+            int puerto = Integer.parseInt(puertoTexto);
+
+            cliente = new ClienteJuego();
+            cliente.setEscuchador(this);
+            cliente.conectar(ip, puerto, nickname);
+
+            lblEstadoConexion.setText("Estado: conectando...");
+            btnConectar.setEnabled(false);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El puerto debe ser numerico");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo conectar: " + e.getMessage());
+            btnConectar.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void alConectado(String mensaje) {
+        lblEstadoConexion.setText("Estado: " + mensaje);
+
+        FrmSala frmSala = new FrmSala(cliente, txtNickname.getText().trim());
+        cliente.setEscuchador(frmSala);
+        frmSala.setVisible(true);
+        dispose();
+    }
+
+    @Override
+    public void alError(String mensaje) {
+        lblEstadoConexion.setText("Estado: " + mensaje);
+        btnConectar.setEnabled(true);
+    }
+
+    @Override
+    public void alMensaje(String mensaje) {
+        lblEstadoConexion.setText("Estado: " + mensaje);
+    }
+
+    @Override
+    public void alJugadores(String datos) {
+    }
+
+    @Override
+    public void alPregunta(String idPregunta, String enunciado, String opciones) {
+    }
+
+    @Override
+    public void alResultadoRespuesta(String resultado, int puntos) {
+    }
+
+    @Override
+    public void alPuntajes(String datos) {
+    }
+
+    @Override
+    public void alGanador(String nombreGanador, int puntaje) {
+    }
+
+    @Override
+    public void alDesconectado(String mensaje) {
+        lblEstadoConexion.setText("Estado: " + mensaje);
+        btnConectar.setEnabled(true);
+    }
+
+    public static void main(String[] args) {
+        new FrmConexion().setVisible(true);
     }
 
     /**
@@ -182,27 +295,7 @@ public class FrmConexion extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmConexion().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConectar;

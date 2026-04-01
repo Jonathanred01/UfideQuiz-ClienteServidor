@@ -87,7 +87,7 @@ public class JuegoControlador {
     }
 
     public synchronized void iniciarPartida() {
-        List<Pregunta> preguntas = preguntaDAO.obtenerPreguntasPrueba();
+        List<Pregunta> preguntas = preguntaDAO.obtenerPreguntas();
         partida = new Partida(preguntas);
         partida.iniciar();
         reiniciarEstadoRespuestasJugadores();
@@ -164,8 +164,10 @@ public class JuegoControlador {
         } else {
             enviarMensajeATodos(Protocolo.GANADOR + "|SIN_GANADOR|0");
         }
+        System.out.println("Partida finalizada. Cerrando servidor...");
+        System.exit(0);
     }
-
+    
     private synchronized Jugador obtenerGanador() {
         if (sala.getJugadores().isEmpty()) {
             return null;

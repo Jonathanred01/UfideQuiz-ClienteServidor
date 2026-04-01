@@ -3,21 +3,90 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package cr.ac.ufide.quiz.cliente.servidor.Vista;
-
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.ClienteJuego;
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.EscuchadorCliente;
+import javax.swing.JFrame;
 /**
  *
  * @author jimel
  */
-public class FrmSala extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmSala.class.getName());
 
-    /**
-     * Creates new form FrmSala
-     */
-    public FrmSala() {
+
+public class FrmSala extends JFrame implements EscuchadorCliente {
+
+    private ClienteJuego cliente;
+    private String nickname;
+
+    public FrmSala(ClienteJuego cliente, String nickname) {
+        this.cliente = cliente;
+        this.nickname = nickname;
+
         initComponents();
+        setLocationRelativeTo(null);
+
+        lblNombreJugador.setText(nickname);
+        txtAreaJugadores.setEditable(false);
+        lblMensajeSala.setText("Esperando jugadores...");
     }
+
+    @Override
+    public void alConectado(String mensaje) {
+    }
+
+    @Override
+    public void alError(String mensaje) {
+        lblMensajeSala.setText(mensaje);
+    }
+
+    @Override
+    public void alMensaje(String mensaje) {
+        lblMensajeSala.setText(mensaje);
+    }
+
+    @Override
+    public void alJugadores(String datos) {
+        txtAreaJugadores.setText("");
+
+        if (datos == null || datos.trim().isEmpty()) {
+            return;
+        }
+
+        String[] jugadores = datos.split(";");
+
+        for (int i = 0; i < jugadores.length; i++) {
+            String[] partes = jugadores[i].split(":");
+            if (partes.length >= 3) {
+                txtAreaJugadores.append(partes[0] + " - " + partes[1] + " pts - " + partes[2] + "\n");
+            }
+        }
+    }
+
+    @Override
+    public void alPregunta(String idPregunta, String enunciado, String opciones) {
+        FrmPregunta frmPregunta = new FrmPregunta(cliente, nickname);
+        cliente.setEscuchador(frmPregunta);
+        frmPregunta.cargarPregunta(idPregunta, enunciado, opciones);
+        frmPregunta.setVisible(true);
+        dispose();
+    }
+
+    @Override
+    public void alResultadoRespuesta(String resultado, int puntos) {
+    }
+
+    @Override
+    public void alPuntajes(String datos) {
+    }
+
+    @Override
+    public void alGanador(String nombreGanador, int puntaje) {
+    }
+
+    @Override
+    public void alDesconectado(String mensaje) {
+        lblMensajeSala.setText(mensaje);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +112,6 @@ public class FrmSala extends javax.swing.JFrame {
         lblMensajeSala = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 529));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -75,10 +143,13 @@ public class FrmSala extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtAreaJugadores);
 
         btnListo.setText("Estoy listo");
+        btnListo.addActionListener(this::btnListoActionPerformed);
 
         btnIniciarManual.setText("Iniciar");
+        btnIniciarManual.addActionListener(this::btnIniciarManualActionPerformed);
 
         btnSalirSala.setText("Salir");
+        btnSalirSala.addActionListener(this::btnSalirSalaActionPerformed);
 
         lblMensajeSala.setText("Esperando jugadores");
 
@@ -152,30 +223,32 @@ public class FrmSala extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
+    private void btnListoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListoActionPerformed
+        cliente.enviarListo();
+        btnListo.setEnabled(false);
+        lblMensajeSala.setText("Marcado como listo");
+    }//GEN-LAST:event_btnListoActionPerformed
+
+    private void btnIniciarManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarManualActionPerformed
+    lblMensajeSala.setText("Esperando a que todos esten listos");
+    }//GEN-LAST:event_btnIniciarManualActionPerformed
+
+    private void btnSalirSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirSalaActionPerformed
+        cliente.salir();
+        dispose();
+        new FrmConexion().setVisible(true);
+    }//GEN-LAST:event_btnSalirSalaActionPerformed
+
+
+
+
+
+  
+    /**s
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmSala().setVisible(true));
-    }
+    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciarManual;

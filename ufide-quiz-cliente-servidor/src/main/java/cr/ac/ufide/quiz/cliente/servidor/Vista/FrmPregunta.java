@@ -3,22 +3,136 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package cr.ac.ufide.quiz.cliente.servidor.Vista;
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.ClienteJuego;
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.EscuchadorCliente;
+import javax.swing.JFrame;
 
 /**
  *
  * @author jimel
  */
-public class FrmPregunta extends javax.swing.JFrame {
+
+public class FrmPregunta extends JFrame implements EscuchadorCliente {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPregunta.class.getName());
 
     /**
      * Creates new form FrmPregunta
      */
-    public FrmPregunta() {
-        initComponents();
+
+    private ClienteJuego cliente;
+    private String nickname;
+    private int[] idsOpciones;
+    private String datosPuntajes;
+
+    public FrmPregunta(ClienteJuego cliente, String nickname) {
+        this.cliente = cliente;
+        this.nickname = nickname;
+        this.idsOpciones = new int[4];
+
+        initComponents(); // 🔥 ESTO FALTABA
+        setLocationRelativeTo(null);
     }
 
+    public void cargarPregunta(String idPregunta, String enunciado, String opciones) {
+        lblNumeroPregunta.setText("Pregunta ID: " + idPregunta);
+        lblPregunta.setText(enunciado);
+        lblEstadoRespuesta.setText("Seleccione una opcion");
+
+        String[] listaOpciones = opciones.split(";");
+
+        for (int i = 0; i < listaOpciones.length && i < 4; i++) {
+            String[] partes = listaOpciones[i].split("~");
+
+            if (partes.length >= 2) {
+                idsOpciones[i] = Integer.parseInt(partes[0]);
+
+                if (i == 0) btnOpcion1.setText(partes[1]);
+                if (i == 1) btnOpcion2.setText(partes[1]);
+                if (i == 2) btnOpcion3.setText(partes[1]);
+                if (i == 3) btnOpcion4.setText(partes[1]);
+            }
+        }
+
+        habilitarBotones(true);
+    }
+
+    private void responder(int indice) {
+        if (indice >= 0 && indice < idsOpciones.length) {
+            cliente.enviarRespuesta(idsOpciones[indice]);
+            habilitarBotones(false);
+            lblEstadoRespuesta.setText("Respuesta enviada");
+        }
+    }
+
+    private void habilitarBotones(boolean estado) {
+        btnOpcion1.setEnabled(estado);
+        btnOpcion2.setEnabled(estado);
+        btnOpcion3.setEnabled(estado);
+        btnOpcion4.setEnabled(estado);
+    }
+
+
+
+
+
+    
+    @Override
+    public void alConectado(String mensaje) {}
+
+    @Override
+    public void alError(String mensaje) {
+        lblEstadoRespuesta.setText(mensaje);
+    }
+
+    @Override
+    public void alMensaje(String mensaje) {
+        lblEstadoRespuesta.setText(mensaje);
+    }
+
+    @Override
+    public void alJugadores(String datos) {}
+
+    @Override
+    public void alPregunta(String idPregunta, String enunciado, String opciones) {
+        cargarPregunta(idPregunta, enunciado, opciones);
+    }
+
+    @Override
+    public void alResultadoRespuesta(String resultado, int puntos) {
+        lblEstadoRespuesta.setText("Resultado: " + resultado + " - puntos: " + puntos);
+    }
+
+    @Override
+    public void alPuntajes(String datos) {
+        datosPuntajes = datos;
+
+        if (datos == null || datos.isEmpty()) return;
+
+        String[] jugadores = datos.split(";");
+
+        for (String j : jugadores) {
+            String[] partes = j.split(":");
+            if (partes.length >= 2 && partes[0].equalsIgnoreCase(nickname)) {
+                lblPuntajeValor.setText(partes[1]);
+            }
+        }
+    }
+
+    @Override
+    public void alGanador(String nombreGanador, int puntaje) {
+        FrmResultados frm = new FrmResultados(cliente);
+        frm.cargarResultados(nombreGanador, puntaje, datosPuntajes);
+        cliente.setEscuchador(frm);
+        frm.setVisible(true);
+        dispose();
+    }
+
+    @Override
+    public void alDesconectado(String mensaje) {
+        lblEstadoRespuesta.setText(mensaje);
+        habilitarBotones(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,11 +173,13 @@ public class FrmPregunta extends javax.swing.JFrame {
         btnOpcion2.addActionListener(this::btnOpcion2ActionPerformed);
 
         btnOpcion3.setText("Opcion 3");
+        btnOpcion3.addActionListener(this::btnOpcion3ActionPerformed);
 
         btnOpcion1.setText("Opcion 1");
         btnOpcion1.addActionListener(this::btnOpcion1ActionPerformed);
 
         btnOpcion4.setText("Opcion 4");
+        btnOpcion4.addActionListener(this::btnOpcion4ActionPerformed);
 
         lblPuntajeTitulo.setText("Puntaje");
 
@@ -149,37 +265,25 @@ public class FrmPregunta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOpcion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcion2ActionPerformed
-        // TODO add your handling code here:
+        responder(1);
     }//GEN-LAST:event_btnOpcion2ActionPerformed
 
     private void btnOpcion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcion1ActionPerformed
-        // TODO add your handling code here:
+        responder(0);
     }//GEN-LAST:event_btnOpcion1ActionPerformed
+
+    private void btnOpcion3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcion3ActionPerformed
+        responder(2);
+    }//GEN-LAST:event_btnOpcion3ActionPerformed
+
+    private void btnOpcion4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcion4ActionPerformed
+        responder(3);
+    }//GEN-LAST:event_btnOpcion4ActionPerformed
+
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmPregunta().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOpcion1;

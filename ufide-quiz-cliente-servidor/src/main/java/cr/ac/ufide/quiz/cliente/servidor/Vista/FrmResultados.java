@@ -3,21 +3,77 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package cr.ac.ufide.quiz.cliente.servidor.Vista;
-
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.ClienteJuego;
+import cr.ac.ufide.quiz.cliente.servidor.Cliente.EscuchadorCliente;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author jimel
  */
-public class FrmResultados extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmResultados.class.getName());
+public class FrmResultados extends JFrame implements EscuchadorCliente {
 
-    /**
-     * Creates new form FrmResultados
-     */
-    public FrmResultados() {
-        initComponents();
+    private ClienteJuego cliente;
+
+    public FrmResultados(ClienteJuego cliente) {
+        this.cliente = cliente;
+
+        initComponents(); 
+        setLocationRelativeTo(null);
     }
+
+    public void cargarResultados(String nombreGanador, int puntaje, String datosPuntajes) {
+        lblGanadorValor.setText(nombreGanador + " con " + puntaje + " puntos");
+
+        DefaultTableModel modelo = (DefaultTableModel) tblPuntajes.getModel();
+        modelo.setRowCount(0);
+
+        if (datosPuntajes == null || datosPuntajes.trim().isEmpty()) {
+            return;
+        }
+
+        String[] jugadores = datosPuntajes.split(";");
+
+        for (int i = 0; i < jugadores.length; i++) {
+            String[] partes = jugadores[i].split(":");
+
+            if (partes.length >= 2) {
+                modelo.addRow(new Object[]{partes[0], partes[1]});
+            }
+        }
+    }
+
+
+
+
+
+
+    @Override
+    public void alConectado(String mensaje) {}
+
+    @Override
+    public void alError(String mensaje) {}
+
+    @Override
+    public void alMensaje(String mensaje) {}
+
+    @Override
+    public void alJugadores(String datos) {}
+
+    @Override
+    public void alPregunta(String idPregunta, String enunciado, String opciones) {}
+
+    @Override
+    public void alResultadoRespuesta(String resultado, int puntos) {}
+
+    @Override
+    public void alPuntajes(String datos) {}
+
+    @Override
+    public void alGanador(String nombreGanador, int puntaje) {}
+
+    @Override
+    public void alDesconectado(String mensaje) {}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +95,6 @@ public class FrmResultados extends javax.swing.JFrame {
         btnVolverInicio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 529));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -76,8 +131,10 @@ public class FrmResultados extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblPuntajes);
 
         btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
 
         btnVolverInicio.setText("Volver al inicio");
+        btnVolverInicio.addActionListener(this::btnVolverInicioActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,7 +180,7 @@ public class FrmResultados extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,30 +190,27 @@ public class FrmResultados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        if (cliente != null) {
+            cliente.salir();
+        }
+        System.exit(0);
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnVolverInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverInicioActionPerformed
+        if (cliente != null) {
+            cliente.salir();
+        }
+        dispose();
+        new FrmConexion().setVisible(true);
+    }//GEN-LAST:event_btnVolverInicioActionPerformed
+
+
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmResultados().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;

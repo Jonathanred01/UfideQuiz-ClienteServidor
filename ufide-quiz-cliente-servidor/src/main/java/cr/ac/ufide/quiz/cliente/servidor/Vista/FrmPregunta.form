@@ -136,6 +136,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Opcion 3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpcion3ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnOpcion1">
           <Properties>
@@ -149,6 +152,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Opcion 4"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpcion4ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblPuntajeTitulo">
           <Properties>
