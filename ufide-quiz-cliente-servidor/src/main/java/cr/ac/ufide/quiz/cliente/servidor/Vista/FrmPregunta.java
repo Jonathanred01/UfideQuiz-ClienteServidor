@@ -154,6 +154,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
         lblPuntajeTitulo = new javax.swing.JLabel();
         lblPuntajeValor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -161,28 +162,52 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(650, 529));
 
-        lblTituloPregunta.setText("Pregunta actual ");
+        lblTituloPregunta.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTituloPregunta.setForeground(new java.awt.Color(36, 49, 96));
+        lblTituloPregunta.setText("Partida en curso");
 
-        lblNumeroPregunta.setText("Pregunta");
+        lblNumeroPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNumeroPregunta.setForeground(new java.awt.Color(36, 49, 96));
+        lblNumeroPregunta.setText("Pregunta:");
 
+        lblPregunta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPregunta.setForeground(new java.awt.Color(54, 76, 161));
         lblPregunta.setText("Texto de Pregunta ");
 
+        lblEstadoRespuesta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblEstadoRespuesta.setForeground(new java.awt.Color(54, 76, 161));
         lblEstadoRespuesta.setText("Seleccione una opcion ");
 
+        btnOpcion2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOpcion2.setForeground(new java.awt.Color(36, 49, 96));
         btnOpcion2.setText("Opcion 2");
+        btnOpcion2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnOpcion2.addActionListener(this::btnOpcion2ActionPerformed);
 
+        btnOpcion3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOpcion3.setForeground(new java.awt.Color(36, 49, 96));
         btnOpcion3.setText("Opcion 3");
+        btnOpcion3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnOpcion3.addActionListener(this::btnOpcion3ActionPerformed);
 
+        btnOpcion1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOpcion1.setForeground(new java.awt.Color(36, 49, 96));
         btnOpcion1.setText("Opcion 1");
+        btnOpcion1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnOpcion1.addActionListener(this::btnOpcion1ActionPerformed);
 
+        btnOpcion4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOpcion4.setForeground(new java.awt.Color(36, 49, 96));
         btnOpcion4.setText("Opcion 4");
+        btnOpcion4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnOpcion4.addActionListener(this::btnOpcion4ActionPerformed);
 
-        lblPuntajeTitulo.setText("Puntaje");
+        lblPuntajeTitulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPuntajeTitulo.setForeground(new java.awt.Color(36, 49, 96));
+        lblPuntajeTitulo.setText("Puntaje:");
 
+        lblPuntajeValor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPuntajeValor.setForeground(new java.awt.Color(36, 49, 96));
         lblPuntajeValor.setText("0");
 
         jPanel2.setBackground(new java.awt.Color(54, 76, 161));
@@ -202,48 +227,57 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(142, 142, 142)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnOpcion4)
-                    .addComponent(btnOpcion1)
-                    .addComponent(btnOpcion3)
-                    .addComponent(btnOpcion2)
-                    .addComponent(lblNumeroPregunta)
-                    .addComponent(lblPregunta)
-                    .addComponent(lblEstadoRespuesta)
-                    .addComponent(lblTituloPregunta)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(lblPuntajeValor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblPuntajeTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(386, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblPuntajeTitulo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPuntajeValor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblEstadoRespuesta)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnOpcion1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                                .addComponent(btnOpcion2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnOpcion3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnOpcion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblPregunta)
+                            .addComponent(lblNumeroPregunta)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(215, 215, 215)
+                        .addComponent(lblTituloPregunta)))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127)
+                .addGap(42, 42, 42)
                 .addComponent(lblTituloPregunta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addComponent(lblNumeroPregunta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPregunta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
                 .addComponent(lblEstadoRespuesta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOpcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOpcion2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOpcion3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOpcion4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnOpcion1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOpcion2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOpcion3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOpcion4)
-                .addGap(18, 18, 18)
-                .addComponent(lblPuntajeTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPuntajeValor)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPuntajeValor)
+                    .addComponent(lblPuntajeTitulo))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -292,6 +326,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
     private javax.swing.JButton btnOpcion4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblEstadoRespuesta;
     private javax.swing.JLabel lblNumeroPregunta;
     private javax.swing.JLabel lblPregunta;

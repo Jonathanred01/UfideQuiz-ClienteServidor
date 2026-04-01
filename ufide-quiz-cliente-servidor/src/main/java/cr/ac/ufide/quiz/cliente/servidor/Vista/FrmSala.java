@@ -110,17 +110,28 @@ public class FrmSala extends JFrame implements EscuchadorCliente {
         btnIniciarManual = new javax.swing.JButton();
         btnSalirSala = new javax.swing.JButton();
         lblMensajeSala = new javax.swing.JLabel();
+        lblSlogan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(650, 629));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(650, 629));
 
-        lblTituloSala.setText(" Sala de espera");
+        lblTituloSala.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTituloSala.setForeground(new java.awt.Color(36, 49, 96));
+        lblTituloSala.setText(" Sala de juego");
 
-        lblJugadorActual.setText("Jugador actual");
+        lblJugadorActual.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblJugadorActual.setForeground(new java.awt.Color(36, 49, 96));
+        lblJugadorActual.setText("Jugador actual:");
 
+        lblJugadoresConectados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblJugadoresConectados.setForeground(new java.awt.Color(36, 49, 96));
         lblJugadoresConectados.setText("Jugadores conectados");
 
+        lblEstadoSala.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblEstadoSala.setForeground(new java.awt.Color(36, 49, 96));
         lblEstadoSala.setText("Estado de la sala");
 
         jPanel2.setBackground(new java.awt.Color(54, 76, 161));
@@ -136,77 +147,107 @@ public class FrmSala extends JFrame implements EscuchadorCliente {
             .addGap(0, 50, Short.MAX_VALUE)
         );
 
+        lblNombreJugador.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombreJugador.setForeground(new java.awt.Color(36, 49, 96));
         lblNombreJugador.setText("Sin conectar");
 
         txtAreaJugadores.setColumns(20);
         txtAreaJugadores.setRows(5);
+        txtAreaJugadores.setCaretColor(new java.awt.Color(36, 49, 96));
         jScrollPane1.setViewportView(txtAreaJugadores);
 
+        btnListo.setBackground(new java.awt.Color(97, 168, 224));
+        btnListo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnListo.setForeground(new java.awt.Color(255, 255, 255));
         btnListo.setText("Estoy listo");
+        btnListo.setPreferredSize(new java.awt.Dimension(90, 27));
         btnListo.addActionListener(this::btnListoActionPerformed);
 
+        btnIniciarManual.setBackground(new java.awt.Color(97, 168, 224));
+        btnIniciarManual.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnIniciarManual.setForeground(new java.awt.Color(255, 255, 255));
         btnIniciarManual.setText("Iniciar");
         btnIniciarManual.addActionListener(this::btnIniciarManualActionPerformed);
 
+        btnSalirSala.setBackground(new java.awt.Color(97, 168, 224));
+        btnSalirSala.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSalirSala.setForeground(new java.awt.Color(255, 255, 255));
         btnSalirSala.setText("Salir");
         btnSalirSala.addActionListener(this::btnSalirSalaActionPerformed);
 
-        lblMensajeSala.setText("Esperando jugadores");
+        lblMensajeSala.setForeground(new java.awt.Color(120, 121, 121));
+        lblMensajeSala.setText("Esperando jugadores...");
+
+        lblSlogan.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblSlogan.setForeground(new java.awt.Color(54, 76, 161));
+        lblSlogan.setText("La partida inicia pronto");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(116, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblJugadoresConectados)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblJugadorActual)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNombreJugador))
+                    .addComponent(lblEstadoSala))
+                .addGap(112, 112, 112))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
+                        .addGap(173, 173, 173)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNombreJugador)
-                            .addComponent(lblEstadoSala)
-                            .addComponent(lblJugadorActual)
-                            .addComponent(lblJugadoresConectados)
-                            .addComponent(lblTituloSala)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnListo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnIniciarManual, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblMensajeSala)
+                                    .addComponent(btnSalirSala, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(btnListo)
-                        .addGap(51, 51, 51)
-                        .addComponent(btnIniciarManual)
-                        .addGap(53, 53, 53)
-                        .addComponent(btnSalirSala))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(252, 252, 252)
-                        .addComponent(lblMensajeSala)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                        .addGap(234, 234, 234)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSlogan, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(lblTituloSala)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(43, 43, 43)
                 .addComponent(lblTituloSala)
-                .addGap(18, 18, 18)
-                .addComponent(lblJugadorActual)
-                .addGap(18, 18, 18)
-                .addComponent(lblJugadoresConectados)
-                .addGap(18, 18, 18)
-                .addComponent(lblEstadoSala)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNombreJugador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSlogan)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnListo)
-                    .addComponent(btnIniciarManual)
-                    .addComponent(btnSalirSala))
+                    .addComponent(lblJugadorActual)
+                    .addComponent(lblNombreJugador))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblJugadoresConectados)
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblEstadoSala)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnIniciarManual, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnListo, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSalirSala, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblMensajeSala)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -262,6 +303,7 @@ public class FrmSala extends JFrame implements EscuchadorCliente {
     private javax.swing.JLabel lblJugadoresConectados;
     private javax.swing.JLabel lblMensajeSala;
     private javax.swing.JLabel lblNombreJugador;
+    private javax.swing.JLabel lblSlogan;
     private javax.swing.JLabel lblTituloSala;
     private javax.swing.JTextArea txtAreaJugadores;
     // End of variables declaration//GEN-END:variables

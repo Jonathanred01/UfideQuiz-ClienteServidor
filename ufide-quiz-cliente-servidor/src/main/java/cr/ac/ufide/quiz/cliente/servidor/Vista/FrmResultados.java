@@ -93,6 +93,8 @@ public class FrmResultados extends JFrame implements EscuchadorCliente {
         tblPuntajes = new javax.swing.JTable();
         btnCerrar = new javax.swing.JButton();
         btnVolverInicio = new javax.swing.JButton();
+        lblSlogan = new javax.swing.JLabel();
+        lblSlogan1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,69 +113,106 @@ public class FrmResultados extends JFrame implements EscuchadorCliente {
             .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        lblTituloResultados.setText("Resultados finales");
+        lblTituloResultados.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTituloResultados.setForeground(new java.awt.Color(36, 49, 96));
+        lblTituloResultados.setText("Tabla de puntajes");
 
-        lblGanadorTitulo.setText("Ganador");
+        lblGanadorTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblGanadorTitulo.setForeground(new java.awt.Color(91, 150, 244));
+        lblGanadorTitulo.setText("Victoria absoluta de");
 
+        lblGanadorValor.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblGanadorValor.setForeground(new java.awt.Color(91, 150, 244));
         lblGanadorValor.setText("Pendiente");
 
+        tblPuntajes.setBackground(new java.awt.Color(204, 204, 204));
         tblPuntajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nickname", "Puntaje"
             }
         ));
+        tblPuntajes.setGridColor(new java.awt.Color(36, 49, 96));
+        tblPuntajes.setSelectionBackground(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(tblPuntajes);
 
+        btnCerrar.setBackground(new java.awt.Color(97, 168, 224));
+        btnCerrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCerrar.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(this::btnCerrarActionPerformed);
 
+        btnVolverInicio.setBackground(new java.awt.Color(97, 168, 224));
+        btnVolverInicio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVolverInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnVolverInicio.setText("Volver al inicio");
         btnVolverInicio.addActionListener(this::btnVolverInicioActionPerformed);
+
+        lblSlogan.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblSlogan.setForeground(new java.awt.Color(54, 76, 161));
+        lblSlogan.setText("Felicidades jugadores");
+
+        lblSlogan1.setForeground(new java.awt.Color(54, 76, 161));
+        lblSlogan1.setText("Demás jugadores suerte la próxima");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblSlogan1)
+                .addGap(240, 240, 240))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblGanadorValor)
-                            .addComponent(lblGanadorTitulo)
-                            .addComponent(lblTituloResultados)))
+                        .addGap(230, 230, 230)
+                        .addComponent(lblTituloResultados))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(btnCerrar)
-                        .addGap(59, 59, 59)
-                        .addComponent(btnVolverInicio)))
-                .addContainerGap(106, Short.MAX_VALUE))
+                        .addGap(245, 245, 245)
+                        .addComponent(lblSlogan))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnVolverInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(lblGanadorTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblGanadorValor)))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133)
+                .addGap(34, 34, 34)
                 .addComponent(lblTituloResultados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblGanadorTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblGanadorValor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblSlogan)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCerrar)
-                    .addComponent(btnVolverInicio))
-                .addGap(0, 73, Short.MAX_VALUE))
+                    .addComponent(lblGanadorTitulo)
+                    .addComponent(lblGanadorValor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSlogan1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolverInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,6 +259,8 @@ public class FrmResultados extends JFrame implements EscuchadorCliente {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblGanadorTitulo;
     private javax.swing.JLabel lblGanadorValor;
+    private javax.swing.JLabel lblSlogan;
+    private javax.swing.JLabel lblSlogan1;
     private javax.swing.JLabel lblTituloResultados;
     private javax.swing.JTable tblPuntajes;
     // End of variables declaration//GEN-END:variables
