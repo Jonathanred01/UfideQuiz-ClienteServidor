@@ -38,11 +38,13 @@ public class FrmSala extends JFrame implements EscuchadorCliente {
         lblMensajeSala.setText(mensaje);
     }
 
+    
     @Override
     public void alMensaje(String mensaje) {
         lblMensajeSala.setText(mensaje);
     }
 
+    
     @Override
     public void alJugadores(String datos) {
         txtAreaJugadores.setText("");

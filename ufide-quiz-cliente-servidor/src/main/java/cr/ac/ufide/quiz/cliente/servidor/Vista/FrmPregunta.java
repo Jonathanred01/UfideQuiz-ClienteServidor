@@ -20,7 +20,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
     /**
      * Creates new form FrmPregunta
      */
-
+    // Variables privadas
     private ClienteJuego cliente;
     private String nickname;
     private int[] idsOpciones;
@@ -31,7 +31,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
         this.nickname = nickname;
         this.idsOpciones = new int[4];
 
-        initComponents(); // 🔥 ESTO FALTABA
+        initComponents(); // 
         setLocationRelativeTo(null);
     }
     // Carga la pregunta recibida y coloca las opciones en los botones
@@ -59,6 +59,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
     }
 
     // Envia la respuesta elegida al servidor
+    
     private void responder(int indice) {
         if (indice >= 0 && indice < idsOpciones.length) {
             cliente.enviarRespuesta(idsOpciones[indice]);
@@ -66,6 +67,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
             lblEstadoRespuesta.setText("Respuesta enviada");
         }
     }
+    
    // Activa o desactiva los botones de opciones
     private void habilitarBotones(boolean estado) {
         btnOpcion1.setEnabled(estado);
@@ -74,11 +76,6 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
         btnOpcion4.setEnabled(estado);
     }
 
-
-
-
-
-    
     @Override
     public void alConectado(String mensaje) {}
 
@@ -94,11 +91,14 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
 
     @Override
     public void alJugadores(String datos) {}
-  // Cuando llega una nueva pregunta, la carga en pantalla
+    
+    // Cuando llega una nueva pregunta, la carga en pantalla
+    
     @Override
     public void alPregunta(String idPregunta, String enunciado, String opciones) {
         cargarPregunta(idPregunta, enunciado, opciones);
     }
+    
     // Muestra si la respuesta fue correcta o incorrecta
     @Override
     public void alResultadoRespuesta(String resultado, int puntos) {

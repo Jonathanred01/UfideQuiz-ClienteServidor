@@ -22,6 +22,7 @@ public class FrmResultados extends JFrame implements EscuchadorCliente {
         initComponents(); 
         setLocationRelativeTo(null);
     }
+    
     // Carga en pantalla el ganador y los puntajes de todos los jugadores
     public void cargarResultados(String nombreGanador, int puntaje, String datosPuntajes) {
         lblGanadorValor.setText(nombreGanador + " con " + puntaje + " puntos");
@@ -43,11 +44,6 @@ public class FrmResultados extends JFrame implements EscuchadorCliente {
             }
         }
     }
-
-
-
-
-
 
     @Override
     public void alConectado(String mensaje) {}
