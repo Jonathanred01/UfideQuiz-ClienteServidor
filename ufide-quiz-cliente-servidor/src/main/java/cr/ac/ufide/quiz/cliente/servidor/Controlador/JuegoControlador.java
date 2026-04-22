@@ -87,12 +87,31 @@ public class JuegoControlador {
     }
 
     public synchronized void iniciarPartida() {
-        List<Pregunta> preguntas = preguntaDAO.obtenerPreguntas();
-        partida = new Partida(preguntas);
-        partida.iniciar();
-        reiniciarEstadoRespuestasJugadores();
-        enviarMensajeATodos(Protocolo.MENSAJE + "|La partida ha iniciado");
-        enviarPreguntaActualATodos();
+        try {
+            // Carga preguntas aleatorias desde MySQL
+            List<Pregunta> preguntas = preguntaDAO.obtenerPreguntasAleatorias(5);
+
+            // Valida que existan preguntas
+            if (preguntas.isEmpty()) {
+                enviarMensajeATodos(Protocolo.ERROR + "|No hay preguntas registradas en la base de datos");
+                return;
+            }
+
+            // Crea la partida con las preguntas obtenidas
+            partida = new Partida(preguntas);
+            partida.iniciar();
+
+            // Reinicia el estado de respuestas
+            reiniciarEstadoRespuestasJugadores();
+
+            // Notifica a todos los clientes
+            enviarMensajeATodos(Protocolo.MENSAJE + "|La partida ha iniciado");
+            enviarPreguntaActualATodos();
+
+        } catch (RuntimeException e) {
+            System.out.println("Error al iniciar partida: " + e.getMessage());
+            enviarMensajeATodos(Protocolo.ERROR + "|No se pudieron cargar las preguntas desde MySQL");
+        }
     }
 
     public synchronized void procesarRespuesta(Jugador jugador, int idOpcion) {
