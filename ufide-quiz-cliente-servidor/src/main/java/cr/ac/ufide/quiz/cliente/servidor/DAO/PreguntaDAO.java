@@ -4,10 +4,7 @@
  */
 package cr.ac.ufide.quiz.cliente.servidor.DAO;
 
-import cr.ac.ufide.quiz.cliente.servidor.Modelo.Opcion;
-import cr.ac.ufide.quiz.cliente.servidor.Modelo.Pregunta;
-import java.util.ArrayList;
-import java.util.List;
+
 import cr.ac.ufide.quiz.cliente.servidor.Modelo.Opcion;
 import cr.ac.ufide.quiz.cliente.servidor.Modelo.Pregunta;
 import java.sql.Connection;

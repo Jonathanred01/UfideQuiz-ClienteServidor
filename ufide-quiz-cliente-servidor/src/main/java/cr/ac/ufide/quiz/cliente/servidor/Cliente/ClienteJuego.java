@@ -12,6 +12,9 @@ import javax.swing.SwingUtilities;
  *
  * @author John
  */
+// Esta clase maneja toda la conexion del cliente con el servidor.
+// Se encarga de conectarse, enviar mensajes, recibir respuestas
+// y avisarle a la interfaz lo que va pasando en el juego.
 public class ClienteJuego extends Thread {
 
     private Socket socket;
@@ -20,10 +23,12 @@ public class ClienteJuego extends Thread {
     private boolean activo;
     private EscuchadorCliente escuchador;
 
+    // Guarda el escuchador para mandar avisos a la interfaz
     public void setEscuchador(EscuchadorCliente escuchador) {
         this.escuchador = escuchador;
     }
 
+    // Conecta el cliente al servidor e inicia el hilo de escucha
     public void conectar(String ip, int puerto, String nickname) throws Exception {
         socket = new Socket(ip, puerto);
         entrada = new DataInputStream(socket.getInputStream());
@@ -36,6 +41,7 @@ public class ClienteJuego extends Thread {
     @Override
     public void run() {
         try {
+            // Se queda escuchando mensajes del servidor mientras este activo
             while (activo) {
                 String mensaje = entrada.readUTF();
                 procesarMensaje(mensaje);
@@ -47,6 +53,7 @@ public class ClienteJuego extends Thread {
         }
     }
 
+    // Aqui se revisa que tipo de mensaje llego y que accion hacer
     private void procesarMensaje(String mensaje) {
         String[] partes = mensaje.split("\\|", 4);
         String comando = partes[0];
@@ -95,20 +102,24 @@ public class ClienteJuego extends Thread {
         }
     }
 
+    // Envia al servidor que el jugador ya esta listo
     public void enviarListo() {
         enviarMensaje(Protocolo.LISTO);
     }
 
+    // Envia la respuesta elegida por el jugador
     public void enviarRespuesta(int idOpcion) {
         enviarMensaje(Protocolo.RESPUESTA + "|" + idOpcion);
     }
 
+    // Cierra la conexion del cliente
     public void salir() {
         activo = false;
         enviarMensaje(Protocolo.SALIR);
         cerrarRecursos();
     }
 
+    // Metodo general para enviar mensajes al servidor
     private void enviarMensaje(String mensaje) {
         try {
             if (salida != null) {
@@ -120,6 +131,7 @@ public class ClienteJuego extends Thread {
         }
     }
 
+    // Cierra los flujos y el socket para liberar recursos
     private void cerrarRecursos() {
         try {
             if (entrada != null) {
@@ -146,6 +158,8 @@ public class ClienteJuego extends Thread {
         }
     }
 
+    // Estos metodos mandan avisos a la interfaz para actualizar
+    // mensajes, preguntas, puntajes o estado de la conexion
     private void notificarConectado(final String mensaje) {
         if (escuchador != null) {
             SwingUtilities.invokeLater(new Runnable() {

@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author jimel
  */
+// Esta ventana muestra el ganador final y la tabla de puntajes
 public class FrmResultados extends JFrame implements EscuchadorCliente {
 
     private ClienteJuego cliente;
@@ -21,7 +22,7 @@ public class FrmResultados extends JFrame implements EscuchadorCliente {
         initComponents(); 
         setLocationRelativeTo(null);
     }
-
+    // Carga en pantalla el ganador y los puntajes de todos los jugadores
     public void cargarResultados(String nombreGanador, int puntaje, String datosPuntajes) {
         lblGanadorValor.setText(nombreGanador + " con " + puntaje + " puntos");
 
@@ -228,14 +229,14 @@ public class FrmResultados extends JFrame implements EscuchadorCliente {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Cierra la sesion actual
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         if (cliente != null) {
             cliente.salir();
         }
         System.exit(0);
     }//GEN-LAST:event_btnCerrarActionPerformed
-
+    //Vuelve al lobby
     private void btnVolverInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverInicioActionPerformed
         if (cliente != null) {
             cliente.salir();

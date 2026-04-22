@@ -16,6 +16,9 @@ import java.net.Socket;
  *
  * @author John
  */
+// Esta clase atiende a cada cliente que se conecta al servidor.
+// Aqui se reciben los mensajes del cliente y se mandan al controlador
+// para manejar la logica del juego.
 public class ClienteHandler extends Thread {
 
     private Socket socket;
@@ -25,6 +28,7 @@ public class ClienteHandler extends Thread {
     private Jugador jugador;
     private boolean activo;
 
+    // Guarda el socket y el controlador para trabajar con el cliente
     public ClienteHandler(Socket socket, JuegoControlador controlador) {
         this.socket = socket;
         this.controlador = controlador;
@@ -38,6 +42,7 @@ public class ClienteHandler extends Thread {
             salida = new DataOutputStream(socket.getOutputStream());
             enviarMensaje(Protocolo.MENSAJE + "|Conexion establecida con el servidor");
 
+            // Se queda escuchando mensajes del cliente
             while (activo) {
                 String mensaje = entrada.readUTF();
                 procesarMensaje(mensaje);
@@ -49,6 +54,7 @@ public class ClienteHandler extends Thread {
         }
     }
 
+    // Revisa el comando recibido y ejecuta la accion correspondiente
     private void procesarMensaje(String mensaje) {
         if (mensaje == null || mensaje.trim().isEmpty()) {
             enviarMensaje(Protocolo.ERROR + "|Mensaje vacio");
@@ -75,6 +81,7 @@ public class ClienteHandler extends Thread {
         }
     }
 
+    // Procesa la conexion inicial del jugador con su nickname
     private void procesarConexion(String[] partes) throws ValidacionException {
         if (partes.length < 2) {
             throw new ValidacionException("Debe enviar el nickname");
@@ -89,6 +96,7 @@ public class ClienteHandler extends Thread {
         enviarMensaje(Protocolo.OK + "|Bienvenido " + jugador.getNombre());
     }
 
+    // Procesa la respuesta enviada por el jugador
     private void procesarRespuesta(String[] partes) throws ValidacionException {
         if (jugador == null) {
             throw new ValidacionException("Primero debe conectarse a la sala");
@@ -106,6 +114,7 @@ public class ClienteHandler extends Thread {
         }
     }
 
+    // Envia mensajes normales al cliente
     public void enviarMensaje(String mensaje) {
         try {
             if (salida != null) {
@@ -117,6 +126,7 @@ public class ClienteHandler extends Thread {
         }
     }
 
+    // Envia mensajes sin mostrar mucho control extra
     private void enviarMensajeSilencioso(String mensaje) {
         try {
             if (salida != null) {
@@ -128,10 +138,12 @@ public class ClienteHandler extends Thread {
         }
     }
 
+    // Devuelve el jugador asociado a este cliente
     public Jugador getJugador() {
         return jugador;
     }
 
+    // Cierra la conexion y libera los recursos usados
     private void cerrarConexion() {
         activo = false;
         controlador.desconectarJugador(this);

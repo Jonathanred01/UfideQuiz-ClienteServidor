@@ -39,3 +39,4 @@ public class Respuesta {
         return correcta;
     }
 }
+//Se manejan las respuestas y de una vez dice si esta correcta o no

@@ -8,6 +8,9 @@ package cr.ac.ufide.quiz.cliente.servidor.Cliente;
  *
  * @author John
  */
+// Esta interfaz se usa para avisar a la parte visual del cliente
+// lo que va pasando en el juego, por ejemplo conexiones,
+// errores, mensajes, preguntas, puntajes y ganador final.
 public interface EscuchadorCliente {
 
     void alConectado(String mensaje);

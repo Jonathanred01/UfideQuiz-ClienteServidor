@@ -19,6 +19,8 @@ import javax.swing.JTextField;
  *
  * @author jimel
  */
+// Esta ventana permite al jugador ingresar sus datos
+// para conectarse al servidor y entrar a la sala.
 public class FrmConexion extends JFrame implements EscuchadorCliente {
 
 
@@ -28,6 +30,7 @@ public class FrmConexion extends JFrame implements EscuchadorCliente {
     /**
      * Creates new form FrmConexion
      */
+    
     public FrmConexion() {
         initComponents();
         setLocationRelativeTo(null);
@@ -36,7 +39,7 @@ public class FrmConexion extends JFrame implements EscuchadorCliente {
         txtIp.setText("127.0.0.1");
         txtPuerto.setText("6500");
     }
-
+    // Aqui se configuran los botones principales de la ventana
     private void configurarEventos() {
         btnConectar.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -52,7 +55,7 @@ public class FrmConexion extends JFrame implements EscuchadorCliente {
             }
         });
     }
-
+    // Intenta conectar al cliente con los datos ingresados
     private void conectar() {
         String nickname = txtNickname.getText().trim();
         String ip = txtIp.getText().trim();
@@ -80,7 +83,7 @@ public class FrmConexion extends JFrame implements EscuchadorCliente {
             btnConectar.setEnabled(true);
         }
     }
-
+    // Si conecta bien, abre la ventana de sala
     @Override
     public void alConectado(String mensaje) {
         lblEstadoConexion.setText("Estado: " + mensaje);
@@ -90,13 +93,14 @@ public class FrmConexion extends JFrame implements EscuchadorCliente {
         frmSala.setVisible(true);
         dispose();
     }
+    // Muestra errores de conexion
 
     @Override
     public void alError(String mensaje) {
         lblEstadoConexion.setText("Estado: " + mensaje);
         btnConectar.setEnabled(true);
     }
-
+    // Muestra mensajes generales del servidor
     @Override
     public void alMensaje(String mensaje) {
         lblEstadoConexion.setText("Estado: " + mensaje);
@@ -121,13 +125,13 @@ public class FrmConexion extends JFrame implements EscuchadorCliente {
     @Override
     public void alGanador(String nombreGanador, int puntaje) {
     }
-
+    // Si se desconecta, actualiza el estado y habilita el boton
     @Override
     public void alDesconectado(String mensaje) {
         lblEstadoConexion.setText("Estado: " + mensaje);
         btnConectar.setEnabled(true);
     }
-
+    // Inicia la ventana de conexion
     public static void main(String[] args) {
         new FrmConexion().setVisible(true);
     }

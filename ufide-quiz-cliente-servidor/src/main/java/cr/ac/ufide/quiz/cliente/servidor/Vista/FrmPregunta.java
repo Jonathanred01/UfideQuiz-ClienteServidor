@@ -11,7 +11,8 @@ import javax.swing.JFrame;
  *
  * @author jimel
  */
-
+// Esta ventana muestra la pregunta actual del juego,
+// las opciones disponibles y el puntaje del jugador
 public class FrmPregunta extends JFrame implements EscuchadorCliente {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPregunta.class.getName());
@@ -33,7 +34,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
         initComponents(); // 🔥 ESTO FALTABA
         setLocationRelativeTo(null);
     }
-
+    // Carga la pregunta recibida y coloca las opciones en los botones
     public void cargarPregunta(String idPregunta, String enunciado, String opciones) {
         lblNumeroPregunta.setText("Pregunta ID: " + idPregunta);
         lblPregunta.setText(enunciado);
@@ -57,6 +58,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
         habilitarBotones(true);
     }
 
+    // Envia la respuesta elegida al servidor
     private void responder(int indice) {
         if (indice >= 0 && indice < idsOpciones.length) {
             cliente.enviarRespuesta(idsOpciones[indice]);
@@ -64,7 +66,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
             lblEstadoRespuesta.setText("Respuesta enviada");
         }
     }
-
+   // Activa o desactiva los botones de opciones
     private void habilitarBotones(boolean estado) {
         btnOpcion1.setEnabled(estado);
         btnOpcion2.setEnabled(estado);
@@ -92,17 +94,17 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
 
     @Override
     public void alJugadores(String datos) {}
-
+  // Cuando llega una nueva pregunta, la carga en pantalla
     @Override
     public void alPregunta(String idPregunta, String enunciado, String opciones) {
         cargarPregunta(idPregunta, enunciado, opciones);
     }
-
+    // Muestra si la respuesta fue correcta o incorrecta
     @Override
     public void alResultadoRespuesta(String resultado, int puntos) {
         lblEstadoRespuesta.setText("Resultado: " + resultado + " - puntos: " + puntos);
     }
-
+    // Actualiza el puntaje del jugador actual
     @Override
     public void alPuntajes(String datos) {
         datosPuntajes = datos;
@@ -118,7 +120,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
             }
         }
     }
-
+    // Abre la ventana final cuando ya hay un ganador
     @Override
     public void alGanador(String nombreGanador, int puntaje) {
         FrmResultados frm = new FrmResultados(cliente);
@@ -297,7 +299,7 @@ public class FrmPregunta extends JFrame implements EscuchadorCliente {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Botones
     private void btnOpcion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcion2ActionPerformed
         responder(1);
     }//GEN-LAST:event_btnOpcion2ActionPerformed

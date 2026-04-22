@@ -12,6 +12,8 @@ import java.sql.SQLException;
  */
 public class ConexionBD {
 
+    // Esta clase se encarga de hacer la conexion con la base de datos MySQL
+
     // URL de la base de datos
     private static final String URL = "jdbc:mysql://localhost:3306/ufidequiz?serverTimezone=UTC";
     
@@ -23,19 +25,20 @@ public class ConexionBD {
 
     static {
         try {
-            // Carga el driver de MySQL
+            // Carga el driver de MySQL al iniciar la clase
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("No se encontro el driver de MySQL", e);
         }
     }
 
+    // Constructor privado para que no se creen objetos de esta clase
     private ConexionBD() {
         
     }
-
+    // Esta clase devuelve una conexion lista para usar
     public static Connection obtenerConexion() throws SQLException {
-        // Retorna la conexion activa
+        
         return DriverManager.getConnection(URL, USUARIO, CLAVE);
     }
 }

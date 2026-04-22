@@ -23,6 +23,9 @@ import java.util.List;
  *
  * @author John
  */
+// Esta clase controla toda la logica principal del juego.
+// Aqui se maneja la sala, los jugadores, el inicio de la partida,
+// las respuestas, los puntajes y el ganador final.
 public class JuegoControlador {
 
     private Sala sala;
@@ -31,6 +34,7 @@ public class JuegoControlador {
     private List<ClienteHandler> clientes;
     private int consecutivoJugador;
 
+    // Inicializa la sala y las listas necesarias del juego
     public JuegoControlador() {
         this.sala = new Sala(1, "Sala principal", 10);
         this.preguntaDAO = new PreguntaDAO();
@@ -38,6 +42,7 @@ public class JuegoControlador {
         this.consecutivoJugador = 1;
     }
 
+    // Conecta un jugador nuevo validando nombre y espacio en la sala
     public synchronized Jugador conectarJugador(String nombre, ClienteHandler cliente) throws ValidacionException {
         validarNickname(nombre);
 
@@ -60,6 +65,7 @@ public class JuegoControlador {
         return jugador;
     }
 
+    // Quita al jugador de la sala cuando se desconecta
     public synchronized void desconectarJugador(ClienteHandler cliente) {
         Jugador jugador = cliente.getJugador();
 
@@ -72,6 +78,7 @@ public class JuegoControlador {
         enviarJugadoresATodos();
     }
 
+    // Marca a un jugador como listo y revisa si ya puede iniciar la partida
     public synchronized void marcarListo(Jugador jugador) {
         if (jugador == null) {
             return;
@@ -86,6 +93,7 @@ public class JuegoControlador {
         }
     }
 
+    // Inicia la partida cargando preguntas desde la base de datos
     public synchronized void iniciarPartida() {
         try {
             // Carga preguntas aleatorias desde MySQL
@@ -114,6 +122,7 @@ public class JuegoControlador {
         }
     }
 
+    // Procesa la respuesta del jugador y suma puntos si es correcta
     public synchronized void procesarRespuesta(Jugador jugador, int idOpcion) {
         if (jugador == null) {
             return;
@@ -152,12 +161,14 @@ public class JuegoControlador {
             buscarClientePorJugador(jugador).enviarMensaje(Protocolo.RESPUESTA_RESULTADO + "|INCORRECTA|0");
         }
 
+        // Si todos respondieron, se actualiza el juego
         if (todosRespondieron()) {
             enviarPuntajesATodos();
             avanzarFlujoJuego();
         }
     }
 
+    // Pasa a la siguiente pregunta o finaliza la partida
     private synchronized void avanzarFlujoJuego() {
         partida.limpiarRespuestasRonda();
         boolean haySiguiente = partida.avanzarPregunta();
@@ -170,6 +181,7 @@ public class JuegoControlador {
         }
     }
 
+    // Finaliza la partida y manda el ganador
     private synchronized void finalizarPartida() {
         if (partida != null) {
             partida.finalizar();
@@ -187,6 +199,7 @@ public class JuegoControlador {
         System.exit(0);
     }
     
+    // Busca al jugador con mayor puntaje
     private synchronized Jugador obtenerGanador() {
         if (sala.getJugadores().isEmpty()) {
             return null;
@@ -203,6 +216,7 @@ public class JuegoControlador {
         return jugadoresOrdenados.get(0);
     }
 
+    // Revisa si todos los jugadores ya respondieron
     private synchronized boolean todosRespondieron() {
         for (Jugador jugador : sala.getJugadores()) {
             if (!jugador.isRespondioPreguntaActual()) {
@@ -212,12 +226,14 @@ public class JuegoControlador {
         return !sala.getJugadores().isEmpty();
     }
 
+    // Reinicia el estado de respuesta para una nueva ronda
     private synchronized void reiniciarEstadoRespuestasJugadores() {
         for (Jugador jugador : sala.getJugadores()) {
             jugador.setRespondioPreguntaActual(false);
         }
     }
 
+    // Valida que el nickname tenga formato correcto
     private void validarNickname(String nombre) throws ValidacionException {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new ValidacionException("Debe ingresar un nickname");
@@ -228,10 +244,12 @@ public class JuegoControlador {
         }
     }
 
+    // Envia a todos la lista de jugadores actualizada
     public synchronized void enviarJugadoresATodos() {
         enviarMensajeATodos(Protocolo.construirMensajeJugadores(sala.getJugadores()));
     }
 
+    // Envia la pregunta actual a todos los jugadores
     public synchronized void enviarPreguntaActualATodos() {
         if (partida == null) {
             return;
@@ -243,11 +261,13 @@ public class JuegoControlador {
         }
     }
 
+    // Envia a todos los puntajes ordenados
     public synchronized void enviarPuntajesATodos() {
         ordenarJugadoresPorPuntaje();
         enviarMensajeATodos(Protocolo.construirMensajePuntajes(sala.getJugadores()));
     }
 
+    // Ordena los jugadores de mayor a menor puntaje
     private synchronized void ordenarJugadoresPorPuntaje() {
         Collections.sort(sala.getJugadores(), new Comparator<Jugador>() {
             @Override
@@ -258,6 +278,7 @@ public class JuegoControlador {
         ordenarClientes();
     }
 
+    // Ordena la lista de clientes por nombre
     private synchronized void ordenarClientes() {
         Collections.sort(clientes, new Comparator<ClienteHandler>() {
             @Override
@@ -269,6 +290,7 @@ public class JuegoControlador {
         });
     }
 
+    // Envia un mensaje general a todos los clientes conectados
     public synchronized void enviarMensajeATodos(String mensaje) {
         List<ClienteHandler> copia = new ArrayList<>(clientes);
         for (ClienteHandler cliente : copia) {
@@ -276,6 +298,7 @@ public class JuegoControlador {
         }
     }
 
+    // Busca el cliente asociado a un jugador
     public synchronized ClienteHandler buscarClientePorJugador(Jugador jugador) {
         for (ClienteHandler cliente : clientes) {
             if (cliente.getJugador() != null && cliente.getJugador().getId() == jugador.getId()) {

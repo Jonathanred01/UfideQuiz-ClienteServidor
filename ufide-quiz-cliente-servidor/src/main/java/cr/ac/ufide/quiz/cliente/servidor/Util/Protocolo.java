@@ -13,8 +13,12 @@ import java.util.List;
  *
  * @author John
  */
+// Esta clase define las palabras clave que usa el sistema
+// para comunicarse entre cliente y servidor.
+// Tambien arma los mensajes de jugadores, preguntas y puntajes.
 public class Protocolo {
 
+    // Separador principal usado en los mensajes
     public static final String SEPARADOR_PRINCIPAL = "\\|";
     public static final String CONECTAR = "CONECTAR";
     public static final String LISTO = "LISTO";
@@ -29,6 +33,7 @@ public class Protocolo {
     public static final String MENSAJE = "MENSAJE";
     public static final String RESPUESTA_RESULTADO = "RESPUESTA_RESULTADO";
 
+    // Construye el mensaje con los jugadores, puntos y estado
     public static String construirMensajeJugadores(List<Jugador> jugadores) {
         StringBuilder sb = new StringBuilder(JUGADORES).append("|");
 
@@ -48,6 +53,7 @@ public class Protocolo {
         return sb.toString();
     }
 
+    // Construye el mensaje de la pregunta con sus opciones
     public static String construirMensajePregunta(Pregunta pregunta) {
         StringBuilder sb = new StringBuilder(PREGUNTA)
                 .append("|")
@@ -68,6 +74,7 @@ public class Protocolo {
         return sb.toString();
     }
 
+    // Construye el mensaje con los puntajes actuales
     public static String construirMensajePuntajes(List<Jugador> jugadores) {
         StringBuilder sb = new StringBuilder(PUNTAJES).append("|");
 

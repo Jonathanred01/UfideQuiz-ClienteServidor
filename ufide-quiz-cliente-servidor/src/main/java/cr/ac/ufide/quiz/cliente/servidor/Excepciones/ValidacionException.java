@@ -9,8 +9,10 @@ package cr.ac.ufide.quiz.cliente.servidor.Excepciones;
  *
  * @author John
  */
+// Esta excepcion se usa para mostrar errores de validacion en el sistema
 public class ValidacionException extends Exception {
 
+    // Recibe el mensaje de error y lo envia a la clase padre
     public ValidacionException(String mensaje) {
         super(mensaje);
     }
